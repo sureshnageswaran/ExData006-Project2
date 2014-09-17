@@ -1,0 +1,17 @@
+RunAll <- function()
+{
+source("plot1.r")
+source("plot2.r")
+source("plot3.r")
+source("plot4.r")
+source("plot5.r")
+source("plot6.r")
+dfNEI <- readRDS("summarySCC_PM25.rds")
+dfSCC <- readRDS("Source_Classification_Code.rds")
+plot1(,dfNEI,dfSCC,TRUE)
+plot2(,dfNEI,dfSCC,TRUE)
+plot3(,dfNEI,dfSCC,TRUE)
+plot4(,dfNEI,dfSCC,TRUE)
+plot5(,dfNEI,dfSCC,TRUE)
+plot6(,dfNEI,dfSCC,TRUE)
+}
