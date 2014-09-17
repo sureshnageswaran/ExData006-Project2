@@ -1,7 +1,7 @@
 source("checkAndDownload.r") # Contains code to download the files in case absent
 
 library(plyr)    # For join(), which is faster than merge() for the size of the dataframe
-library(ggplot2) # For qplot()
+# library(ggplot2) 
 
 # Function : plot1
 # Author   : Suresh Nageswaran
@@ -56,22 +56,25 @@ plot1 <- function(sPath="C:/projects/rwork/exdata006/project2", dfNEI="", dfSCC=
   
   # Compute the net decrease
   iDiff <- round(max(dfPlot1[,"Emissions"]) - min(dfPlot1[,"Emissions"]))
-  sLabel <- paste("Emissions from PM 2.5 in the US declined by", iDiff)
+  sLabel <- paste("Emissions from PM 2.5 in the US declined by", format(iDiff, big.mark=",", scientific=F))
   
   print("Creating plot on disk...")    
   # Initialize the device
   if (bToFile == TRUE)
   {
     # Initialize the PNG device
-    png(filename=paste(sPath, "/plot1.png", sep=""), width=480, height=480)
+    png(filename=paste(sPath, "/plot1.png", sep=""), width=1000, height=480)
   }
-     
+    
+  par(pch=22, col="red")
+  plot(dfPlot1$Year, dfPlot1$Emissions/1000, type="o", xlab="Year", ylab="Emissions (in millions)", col="red")
+  title("Plot#1: Emissions vs. Year", sub=sLabel)
+   
   #Create the plot  
-  p <- qplot(Year, Emissions/1000, data=dfPlot1, ylab="Emissions (in millions)", geom=c("point", "smooth")) +
-       annotate("text", x = 2004, y = 1000, label = sLabel)+
-       geom_text(aes(label=round(dfPlot1$Emissions/1000)),hjust=.5, vjust=1)
-  
-  print(p)
+  #p <- qplot(Year, Emissions/1000, data=dfPlot1, ylab="Emissions (in millions)", geom=c("point", "smooth")) +
+  #     annotate("text", x = 2004, y = 1000, label = sLabel)+
+  #     geom_text(aes(label=round(dfPlot1$Emissions/1000)),hjust=.5, vjust=1)  
+  #print(p)
    
   # Turn off the device i.e. flush to disk
   if (bToFile == TRUE) dev.off()
