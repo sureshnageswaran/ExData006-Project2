@@ -15,13 +15,16 @@ library(reshape) # For melt()
 # Dependencies : checkAndDownload.r
 # How to invoke: On command line, simply type > plot3() 
 
-plot3 <- function(sPath="C:/projects/rwork/exdata006/project2", dfNEI="", dfSCC="", bToFile = TRUE)
+plot3 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2", dfNEI="", dfSCC="", bToFile = TRUE)
 {
   
   if(!is.data.frame(dfNEI) || !is.data.frame(dfSCC))
   {
-    checkAndDownload()
-  
+    if ( checkAndDownload(sPath) == FALSE )
+    {
+      sPath = getwd()
+    }
+   
     # read in the NEI and SCC rds files into dataframes
     print("Reading in NEI dataframe ...")
     dfNEI <- readRDS("summarySCC_PM25.rds")

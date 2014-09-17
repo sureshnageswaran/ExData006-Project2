@@ -14,13 +14,16 @@ library(ggplot2) # For qplot()
 # Dependencies : checkAndDownload.r
 # How to invoke: On command line, simply type > plot6() 
 
-plot6 <- function(sPath="C:/projects/rwork/exdata006/project2", dfNEI="", dfSCC="", bToFile = TRUE)
+plot6 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2", dfNEI="", dfSCC="", bToFile = TRUE)
 {
   
   if(!is.data.frame(dfNEI) || !is.data.frame(dfSCC))
   {
-    checkAndDownload()
-  
+    if ( checkAndDownload(sPath) == FALSE )
+    {
+      sPath = getwd()
+    }
+   
     # read in the NEI and SCC rds files into dataframes
     print("Reading in NEI dataframe ...")
     dfNEI <- readRDS("summarySCC_PM25.rds")
@@ -70,7 +73,7 @@ plot6 <- function(sPath="C:/projects/rwork/exdata006/project2", dfNEI="", dfSCC=
   
   # Get the difference between emissions for the first and last year
   iLADiff  <- round(subset(dfAns, Year==max(unique(dfAns$Year)) & Fips=="06037", select=c(Emissions))-subset(dfAns, Year==min(unique(dfAns$Year)) & Fips=="06037", select=c(Emissions)))
-  iBalDiff <- round(subset(dfAns, Year==max(unique(dfAns$Year)) & Fips=="24510", select=c(Emissions))-subset(dfAns, Year==min(unique(dfAns$Year)) & Fips=="24510", select=c(Emissions)))
+  iBalDiff <- round(subset(dfAns, Year==min(unique(dfAns$Year)) & Fips=="24510", select=c(Emissions))-subset(dfAns, Year==max(unique(dfAns$Year)) & Fips=="24510", select=c(Emissions)))
   
   # Construct the sentence
   sText <- paste(paste(paste("Emissions from motor vehicle sources \nin LA County increased by", iLADiff), "\nwhile emissions in Baltimore decreased by"), iBalDiff)

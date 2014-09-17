@@ -14,14 +14,16 @@ library(ggplot2) # For qplot()
 # Dependencies : checkAndDownload.r
 # How to invoke: On command line, simply type > plot5() 
 
-plot5 <- function(sPath="C:/projects/rwork/exdata006/project2", dfNEI="", dfSCC="", bToFile = TRUE)
+plot5 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2", dfNEI="", dfSCC="", bToFile = TRUE)
 {
   
   if(!is.data.frame(dfNEI) || !is.data.frame(dfSCC))
   {
-    checkAndDownload()
-  
-    # read in the NEI and SCC rds files into dataframes
+    if ( checkAndDownload(sPath) == FALSE )
+    {
+      sPath = getwd()
+    }
+     # read in the NEI and SCC rds files into dataframes
     print("Reading in NEI dataframe ...")
     dfNEI <- readRDS("summarySCC_PM25.rds")
     print("Reading in SCC dataframe ...")

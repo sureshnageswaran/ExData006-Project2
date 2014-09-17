@@ -14,13 +14,16 @@ library(ggplot2) # For qplot()
 # Dependencies : checkAndDownload.r
 # How to invoke: On command line, simply type > plot2() 
 
-plot2 <- function(sPath="C:/projects/rwork/exdata006/project2", dfNEI="", dfSCC="", bToFile = TRUE)
+plot2 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2", dfNEI="", dfSCC="", bToFile = TRUE)
 {
   
   if(!is.data.frame(dfNEI) || !is.data.frame(dfSCC))
   {
-    checkAndDownload()
-  
+    if ( checkAndDownload(sPath) == FALSE )
+    {
+      sPath = getwd()
+    }
+   
     # read in the NEI and SCC rds files into dataframes
     print("Reading in NEI dataframe ...")
     dfNEI <- readRDS("summarySCC_PM25.rds")
@@ -64,13 +67,16 @@ plot2 <- function(sPath="C:/projects/rwork/exdata006/project2", dfNEI="", dfSCC=
     png(filename=paste(sPath, "/plot2.png", sep=""), width=1000, height=480)
   }
   
-  #Create the plot
+  #Create the plot using the base plotting tools
+  par(pch=22, col="red")
+  plot(dfBalt$Year, dfBalt$Emissions, type="o", xlab="Year", ylab="Emissions", col="red")
+  title("Plot#2: Emissions vs. Year in Baltimore", sub=sLabel)
  
-  p <- qplot(Year, Emissions, data=dfBalt, ylab="Emissions", geom=c("point", "smooth")) +
-       annotate("text", x = 2004, y = 2000, label = sLabel)+
-       geom_text(aes(label=round(dfBalt$Emissions)),hjust=.5, vjust=.1)
-  
-  print(p)
+ 
+  #p <- qplot(Year, Emissions, data=dfBalt, ylab="Emissions", geom=c("point", "smooth")) +
+  #     annotate("text", x = 2004, y = 2000, label = sLabel)+
+  #     geom_text(aes(label=round(dfBalt$Emissions)),hjust=.5, vjust=.1)  
+  #print(p)
   
   # Turn off the device i.e. flush to disk  
   if (bToFile == TRUE) dev.off()

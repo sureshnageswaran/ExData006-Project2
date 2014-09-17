@@ -13,12 +13,15 @@ library(plyr)    # For join(), which is faster than merge() for the size of the 
 # Dependencies : checkAndDownload.r
 # How to invoke: On command line, simply type > plot1() 
 
-plot1 <- function(sPath="C:/projects/rwork/exdata006/project2", dfNEI="", dfSCC="", bToFile = TRUE)
+plot1 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2", dfNEI="", dfSCC="", bToFile = TRUE)
 {
   
   if(!is.data.frame(dfNEI) || !is.data.frame(dfSCC))
   {
-    checkAndDownload()
+    if ( checkAndDownload(sPath) == FALSE )
+    {
+      sPath = getwd()
+    }
   
     # read in the NEI and SCC rds files into dataframes
     print("Reading in NEI dataframe ...")
@@ -26,6 +29,8 @@ plot1 <- function(sPath="C:/projects/rwork/exdata006/project2", dfNEI="", dfSCC=
     print("Reading in SCC dataframe ...")
     dfSCC <- readRDS("Source_Classification_Code.rds")
   }
+  
+  
   
   # ------------------------------------------------------------------#
     # Question: [1]
