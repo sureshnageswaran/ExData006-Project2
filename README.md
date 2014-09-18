@@ -26,15 +26,15 @@ The following questions were posed as part of the assignment -
 
 ### List of Code Files
 
-First Header  | Second Header
-------------- | -------------
-Content Cell  | Content Cell
-Content Cell  | Content Cell
+No. | File Name          | Function Contained | Description                                          |
+--- | -------------------|--------------------|------------------------------------------------------|
+1.  | RunAll.r           | RunAll()           |The purpose is to invoke all the other code in one go.|
+2.  | checkAndDownload.r | checkAndDownload() |Used internally by all other files to check if the data files are available in the path.   |
+3.  | Plot1.r            | Plot1()            |Produces the first plot.                              |
+4.  | Plot2.r            | Plot2()            |Produces the second plot.                             |
+5.  | Plot3.r            | Plot3()            |Produces the third plot.                              |
+6.  | Plot4.r            | Plot4()            |Produces the fourth plot.                             |
+7.  | Plot5.r            | Plot5()            |Produces the fifth plot.                              |
+8.  | Plot6.r            | Plot6()            |Produces the sixth plot.                              |
 
-
-|No. | File Name | Function Contained | Description |
------------------------------------------------------
-
-| 1. | RunAll.r |  RunAll() | The purpose is to invoke all the other code in one go.|
-
-| 2. | checkAndDownload.r | checkAndDownload() | Used internally by all the files to check if the data files are available in the path. |
+### Invocation
