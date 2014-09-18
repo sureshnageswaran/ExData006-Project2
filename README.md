@@ -24,7 +24,7 @@ The following questions were posed as part of the assignment -
  
 #Delivered Code, Data and Output Files
 
-### List of Code Files
+### List of All Delivered Files
 
 | No. | File Name | File Type | Function Contained | Description |
 | ------------- | ------------- |------------- |------------- |------------- |
@@ -47,4 +47,34 @@ The following questions were posed as part of the assignment -
 
 
 ### How to Run
-1. For your convenience, a RunAll() function has been provided. 
+
+1. For your convenience, a RunAll() function has been provided in the RunAll.r file. 
+
+2. The RunAll() function will automatically download the required data, read in the input dataframes exactly once and run all the plotting functions one after another. This is faster than invoking each individual function. 
+   * This can be run at the R command line like so:
+   * > RunAll()
+
+3. The plotting functions can also be invoked with parameters that reduce the memory used and time consumed. These parameters are:
+   * Path to the input data files - this is also the path used as the working directory and where the output is generated.
+   * dfNEI - a dataframe containing the NEI data (from summarySCC_PM25.rds)
+   * dfSCC - a dataframe containing the SCC data (from SourceClassificationCode.rds)
+   * Boolean (True/False) - This flag tells the code to either write to disk or simply plot to the screen. True: Disk
+   * e.g.
+   *         > dfNEI <- readRDS("summarySCC_PM25.rds")
+   *         > dfSCC <- readRDS("Source_Classification_Code.rds")
+   *         > plot1("c:/temp", dfNEI, dfSCC, TRUE)
+   
+4. All the plotting functions can be invoked at the R command line without any parameters like so: 
+```
+> plot1()
+> plot2()
+...
+> plot6()
+```
+### Viewing the Output
+1. The output is generated as PNG files (1000 x 480).
+2. These files contain the graphic output of the code as well as text annotations about the nature of the conclusions reached.
+
+
+Thanks for reading! Please be sure to leave explanatory comments in your peer review. I'd love to hear your view.
+-Suresh 
