@@ -36,14 +36,14 @@ No. | File Name          | File Type | Function Contained | Description         
 6.  | Plot4.r            |Code       | Plot4()            |Produces the fourth plot.                             |
 7.  | Plot5.r            |Code       | Plot5()            |Produces the fifth plot.                              |
 8.  | Plot6.r            |Code       | Plot6()            |Produces the sixth plot.                              |
-9.  | Plot1.png          |Image      |                    |Output from running Plot1()                           |
-10. | Plot2.png          |Image      |                    |Output from running Plot1()                           |
-11. | Plot3.png          |Image      |                    |Output from running Plot1()                           |
-12. | Plot4.png          |Image      |                    |Output from running Plot1()                           |
-13. | Plot5.png          |Image      |                    |Output from running Plot1()                           |
-14. | Plot6.png          |Image      |                    |Output from running Plot1()                           |
-15. | summarySCC_PM25.rds|Data       |                    |Data downloaded from course website - Input           |
-16. | Source_Classification_Code.rds|Data       |                    |Data downloaded from course website - Input           |
+9.  | Plot1.png          |Image      | -NA-               |Output from running Plot1()                           |
+10. | Plot2.png          |Image      | -NA-               |Output from running Plot1()                           |
+11. | Plot3.png          |Image      | -NA-               |Output from running Plot1()                           |
+12. | Plot4.png          |Image      | -NA-               |Output from running Plot1()                           |
+13. | Plot5.png          |Image      | -NA-               |Output from running Plot1()                           |
+14. | Plot6.png          |Image      | -NA-               |Output from running Plot1()                           |
+15. | summarySCC_PM25.rds|Data       | -NA-               |Data downloaded from course website - Input           |
+16. | SourceClassificationCode.rds|Data       | -NA-                    |Data downloaded from course website - Input           |
 
 ### How to Run
 1. For your convenience, a RunAll() function has been provided. 
