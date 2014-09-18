@@ -50,27 +50,39 @@ The following questions were posed as part of the assignment -
 
 1. For your convenience, a RunAll() function has been provided in the RunAll.r file. 
 
-2. The RunAll() function will automatically download the required data, read in the input dataframes exactly once and run all the plotting functions one after another. This is faster than invoking each individual function. 
-   * This can be run at the R command line like so:
-   * > RunAll()
-
+2. The RunAll() function will automatically download the required data, read in the input dataframes exactly once and run all the plotting functions one after another. This is faster than invoking each individual function. This can be run at the R command line.
+ 
 3. The plotting functions can also be invoked with parameters that reduce the memory used and time consumed. These parameters are:
    * Path to the input data files - this is also the path used as the working directory and where the output is generated.
    * dfNEI - a dataframe containing the NEI data (from summarySCC_PM25.rds)
    * dfSCC - a dataframe containing the SCC data (from SourceClassificationCode.rds)
    * Boolean (True/False) - This flag tells the code to either write to disk or simply plot to the screen. True: Disk
-   * e.g.
-   *         > dfNEI <- readRDS("summarySCC_PM25.rds")
-   *         > dfSCC <- readRDS("Source_Classification_Code.rds")
-   *         > plot1("c:/temp", dfNEI, dfSCC, TRUE)
-   
-4. All the plotting functions can be invoked at the R command line without any parameters like so: 
+
+4. All the plotting functions can be invoked at the R command line without any parameters 
+
+#### Invoking RunAll()
+```
+> RunAll()
+
+```
+#### Invoking individual functions with parameters
+```
+> dfNEI <- readRDS("summarySCC_PM25.rds")
+> dfSCC <- readRDS("Source_Classification_Code.rds")
+> plot1("c:/temp", dfNEI, dfSCC, TRUE)
+> plot2("c:/temp", dfNEI, dfSCC, TRUE)
+...
+> plot6("c:/temp", dfNEI, dfSCC, TRUE)
+```
+#### Invoking individual functions without parameters
+
 ```
 > plot1()
 > plot2()
 ...
 > plot6()
 ```
+
 ### Additional Notes
 1. All files have detailed comments explaining the approach taken.
 2. Some of the questions required base plotting (plots 1,2) and the others have used qplot (from ggplot2).
