@@ -71,6 +71,10 @@ The following questions were posed as part of the assignment -
 ...
 > plot6()
 ```
+### Additional Notes
+1. All files have detailed comments explaining the approach taken.
+2. Some of the questions required base plotting (plots 1,2) and the others have used qplot (from ggplot2).
+
 ### Viewing the Output
 1. The output is generated as PNG files (1000 x 480).
 2. These files contain the graphic output of the code as well as text annotations about the nature of the conclusions reached.
