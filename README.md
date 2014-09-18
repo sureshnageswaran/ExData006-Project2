@@ -26,15 +26,24 @@ The following questions were posed as part of the assignment -
 
 ### List of Code Files
 
-No. | File Name          | Function Contained | Description                                          |
---- | -------------------|--------------------|------------------------------------------------------|
-1.  | RunAll.r           | RunAll()           |The purpose is to invoke all the other code in one go.|
-2.  | checkAndDownload.r | checkAndDownload() |Used internally by all other files to check if the data files are available in the path.   |
-3.  | Plot1.r            | Plot1()            |Produces the first plot.                              |
-4.  | Plot2.r            | Plot2()            |Produces the second plot.                             |
-5.  | Plot3.r            | Plot3()            |Produces the third plot.                              |
-6.  | Plot4.r            | Plot4()            |Produces the fourth plot.                             |
-7.  | Plot5.r            | Plot5()            |Produces the fifth plot.                              |
-8.  | Plot6.r            | Plot6()            |Produces the sixth plot.                              |
+No. | File Name          | File Type | Function Contained | Description                                          |
+--- | -------------------|-----------|---------------------------------------------------------------------------|
+1.  | RunAll.r           |Code       | RunAll()           |The purpose is to invoke all the other code in one go.|
+2.  | checkAndDownload.r |Code       | checkAndDownload() |Used internally by all other files to check if the data files are available in the path.   |
+3.  | Plot1.r            |Code       | Plot1()            |Produces the first plot.                              |
+4.  | Plot2.r            |Code       | Plot2()            |Produces the second plot.                             |
+5.  | Plot3.r            |Code       | Plot3()            |Produces the third plot.                              |
+6.  | Plot4.r            |Code       | Plot4()            |Produces the fourth plot.                             |
+7.  | Plot5.r            |Code       | Plot5()            |Produces the fifth plot.                              |
+8.  | Plot6.r            |Code       | Plot6()            |Produces the sixth plot.                              |
+9.  | Plot1.png          |Image      |                    |Output from running Plot1()                           |
+10. | Plot2.png          |Image      |                    |Output from running Plot1()                           |
+11. | Plot3.png          |Image      |                    |Output from running Plot1()                           |
+12. | Plot4.png          |Image      |                    |Output from running Plot1()                           |
+13. | Plot5.png          |Image      |                    |Output from running Plot1()                           |
+14. | Plot6.png          |Image      |                    |Output from running Plot1()                           |
+15. | summarySCC_PM25.rds|Data       |                    |Data downloaded from course website - Input           |
+16. | Source_Classification_Code.rds|Data       |                    |Data downloaded from course website - Input           |
 
-### Invocation
+### How to Run
+1. For your convenience, a RunAll() function has been provided. 
