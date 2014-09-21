@@ -61,13 +61,18 @@ plot6 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2
   
   # Emission sources are in the column "EI.Sector" in dfSCC
   vSources <- as.vector(unique(dfSCC$EI.Sector))
+  # Emission sources are also in SCC.Level.Two and SCC.Level.Three  
+  vSources2 <- as.vector(unique(dfSCC$SCC.Level.Two))
+  vSources3 <- as.vector(unique(dfSCC$SCC.Level.Three))
 
-  # subset it to recover only the items that are motor vehicle sources
-  vSources <- vSources[grep("vehicles",vSources, ignore.case=TRUE)]
-
+  # subset it to recover only the items that are motor vehicle sources 
+  vSources  <- vSources [grep("vehicle",vSources,  ignore.case=TRUE)]
+  vSources2 <- vSources2[grep("vehicle",vSources2, ignore.case=TRUE)]
+  vSources3 <- vSources3[grep("vehicle",vSources3, ignore.case=TRUE)]
+ 
   print("Running subset operation on dataframe ...")
-  # Subset the merged data to retain only the records with motor vehicle sources i n Baltimore
-  dfMerged <- subset(dfMerged, dfMerged$EI.Sector %in% vSources & (fips == "24510" | fips == "06037"), select = c(year, fips, Emissions))  
+  # Subset the merged data to retain only the records with motor vehicle sources in Baltimore or LA
+  dfMerged <- subset(dfMerged, ((dfMerged$EI.Sector %in% vSources) | (dfMerged$SCC.Level.Two %in% vSources2) | (dfMerged$SCC.Level.Three %in% vSources3)) & (fips == "24510" | fips == "06037"), select = c(year, fips, Emissions))  
   
   # Aggregate (using sum) the Emissions column over the indexes year and fips
   dfAns <- aggregate(dfMerged[,3],by=list(dfMerged$year,dfMerged$fips), sum)
@@ -76,12 +81,26 @@ plot6 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2
   colnames(dfAns) <- c("Year", "Fips", "Emissions")
   
   # Get the difference between emissions for the first and last year
-  iLADiff  <- round(subset(dfAns, Year==max(unique(dfAns$Year)) & Fips=="06037", select=c(Emissions))-subset(dfAns, Year==min(unique(dfAns$Year)) & Fips=="06037", select=c(Emissions)))
-  iBalDiff <- round(subset(dfAns, Year==min(unique(dfAns$Year)) & Fips=="24510", select=c(Emissions))-subset(dfAns, Year==max(unique(dfAns$Year)) & Fips=="24510", select=c(Emissions)))
+  iLAMin   <- subset(dfAns, Year==min(unique(dfAns$Year)) & Fips=="06037", select=c(Emissions))
+  iBalMin  <- subset(dfAns, Year==min(unique(dfAns$Year)) & Fips=="24510", select=c(Emissions))
+  iLAMax   <- subset(dfAns, Year==max(unique(dfAns$Year)) & Fips=="06037", select=c(Emissions))
+  iBalMax  <- subset(dfAns, Year==max(unique(dfAns$Year)) & Fips=="24510", select=c(Emissions))
   
+  # Calc. net increase
+  iLADiff  <- round((iLAMax - iLAMin), digits=2)
+  # Calc. net decrease
+  iBalDiff <- round((iBalMax - iBalMin) * -1, digits=2)
+  
+  iPerDiffLA   <- round((iLADiff/iLAMin)  *100, digits = 2)
+  iPerDiffBalt <- round((iBalDiff/iBalMin)*100, digits = 2)
+ 
   # Construct the sentence
   sText <- paste(paste(paste("Emissions from motor vehicle sources \nin LA County increased by", iLADiff), "\nwhile emissions in Baltimore decreased by"), iBalDiff)
-  
+  sText <- paste(sText, "\nNet Percentage Increase: \nLA County: ", sep="")
+  sText <- paste(sText, iPerDiffLA, sep="")
+  sText <- paste(sText, "%\nNet Percentage Decrease: \nBaltimore: ", sep="")
+  sText <- paste(sText, iPerDiffBalt)
+  sText <- paste(sText, "%", sep="")
   
   print("Creating plot on disk ...")
   if (bToFile == TRUE)
