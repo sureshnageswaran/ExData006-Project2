@@ -48,7 +48,8 @@ plot1 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2
     # Answer:
     # 
     # We will plot the emissions data over the years to show this.
-    # 
+    # Annotations will be provided to show the net decrease as well
+    # as the % decrease.
     # Approach:
     # 
     # For the first plot, we summarize the PM2.5 data by year
@@ -64,9 +65,22 @@ plot1 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2
   # Convert to dataframe
   dfPlot1 <- data.frame(Year=as.numeric(names(lPlot1)), Emissions=as.numeric(lPlot1))
   
+  iMin <- dfPlot1$Emissions[dfPlot1$Year==min(dfPlot1$Year)]
+  iMax <- dfPlot1$Emissions[dfPlot1$Year==max(dfPlot1$Year)]
   # Compute the net decrease
-  iDiff <- round(max(dfPlot1[,"Emissions"]) - min(dfPlot1[,"Emissions"]))
-  sLabel <- paste("Emissions from PM 2.5 in the US declined by", format(iDiff, big.mark=",", scientific=F))
+
+  iDiff <- round((iMax - iMin)* -1, digits=2)
+  dPercent <- round(((iMax - iMin)/iMin)*-1*100, digits=2)
+  
+  #iDiff <- round(max(dfPlot1[,"Emissions"]) - min(dfPlot1[,"Emissions"]))
+  
+  # Text for hte graph
+  sLabel <- paste(paste("Emissions from PM 2.5 in the US declined by", format(iDiff, big.mark=",", scientific=F)), ".", sep="")
+  sLabel <- paste(paste(sLabel, "\nThis is a net decrease of ", dPercent), "%.", sep="")
+  
+  # Compute the % decrease from 1998 to 2008  
+  # dPercent <- 100 * round(min(dfPlot1[,"Emissions"]) / max(dfPlot1[,"Emissions"]), digits = 2)
+  
   
   print("Creating plot on disk...")    
   # Initialize the device
@@ -78,7 +92,8 @@ plot1 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2
     
   par(pch=22, col="red")
   plot(dfPlot1$Year, dfPlot1$Emissions/1000, type="o", xlab="Year", ylab="Emissions (in millions)", col="red")
-  title("Plot#1: Emissions vs. Year", sub=sLabel)
+  title("Plot#1: Emissions vs. Year",sub="") # sub=sLabel)
+  text(2004, 5000, sLabel, cex=.8) 
    
   #Create the plot  
   #p <- qplot(Year, Emissions/1000, data=dfPlot1, ylab="Emissions (in millions)", geom=c("point", "smooth")) +

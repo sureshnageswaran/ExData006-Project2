@@ -72,6 +72,42 @@ plot3 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2
   dfBalt <- melt(dfBalt, id=c("Year"))
   colnames(dfBalt) <- c("Year", "Type", "Emissions")
   
+  # Calculate the % decreases/increases
+  iMax <- dfBalt$Emissions[dfBalt$Year==max(dfBalt$Year) & dfBalt$Type =="POINT"]
+  iMin <- dfBalt$Emissions[dfBalt$Year==min(dfBalt$Year) & dfBalt$Type =="POINT"]
+  dPerPoint <- round(((iMax - iMin ) / iMin) * 100, digits=2)  
+  
+  #dPerPoint <- round((((dfBalt$Emissions[dfBalt$Year==max(dfBalt$Year) & dfBalt$Type =="POINT"] -dfBalt$Emissions[dfBalt$Year==min(dfBalt$Year) & dfBalt$Type =="POINT"])/ dfBalt$Emissions[dfBalt$Year==min(dfBalt$Year) & dfBalt$Type =="POINT"])*100), digits=2 )
+
+  iMax <- dfBalt$Emissions[dfBalt$Year==max(dfBalt$Year) & dfBalt$Type =="NONPOINT"]
+  iMin <- dfBalt$Emissions[dfBalt$Year==min(dfBalt$Year) & dfBalt$Type =="NONPOINT"]
+  dPerNonPoint <- round(((iMax - iMin ) / iMin) * -1 * 100, digits=2)  
+
+  #dPerNonPoint <- round( (dfBalt$Emissions[dfBalt$Year==max(dfBalt$Year) & dfBalt$Type =="NONPOINT"] / dfBalt$Emissions[dfBalt$Year==min(dfBalt$Year) & dfBalt$Type =="NONPOINT"])*100, digits=2 )
+
+  iMax <- dfBalt$Emissions[dfBalt$Year==max(dfBalt$Year) & dfBalt$Type =="ON-ROAD"]
+  iMin <- dfBalt$Emissions[dfBalt$Year==min(dfBalt$Year) & dfBalt$Type =="ON-ROAD"]
+  dPerOnRoad <- round(((iMax - iMin ) / iMin) * -1 * 100, digits=2)  
+  
+  #dPerOnRoad <- round( (dfBalt$Emissions[dfBalt$Year==max(dfBalt$Year) & dfBalt$Type =="ON-ROAD"] / dfBalt$Emissions[dfBalt$Year==min(dfBalt$Year) & dfBalt$Type =="ON-ROAD"])*100, digits=2 )
+  
+  iMax <- dfBalt$Emissions[dfBalt$Year==max(dfBalt$Year) & dfBalt$Type =="NON-ROAD"]
+  iMin <- dfBalt$Emissions[dfBalt$Year==min(dfBalt$Year) & dfBalt$Type =="NON-ROAD"]
+  dPerNonRoad <- round(((iMax - iMin ) / iMin) * -1 * 100, digits=2)
+  
+  #dPerNonRoad <- round( (dfBalt$Emissions[dfBalt$Year==max(dfBalt$Year) & dfBalt$Type =="NON-ROAD"] / dfBalt$Emissions[dfBalt$Year==min(dfBalt$Year) & dfBalt$Type =="NON-ROAD"])*100, digits=2 )
+  
+  
+  # Create the annotation text
+  sLabel <- paste("Emissions from all sources except Point have declined.\n Point  ", dPerPoint, sep="")
+  sLabel <- paste(sLabel, "% [Increase]\n Non-Point  ")
+  sLabel <- paste(sLabel, dPerNonPoint, sep="")
+  sLabel <- paste(sLabel, "% [Decrease]\n On-Road  ")
+  sLabel <- paste(sLabel, dPerOnRoad, sep="")
+  sLabel <- paste(sLabel, "% [Decrease]\n Non-Road  ")
+  sLabel <- paste(sLabel, dPerNonRoad, sep="")
+  sLabel <- paste(sLabel, "% [Decrease].", sep="")
+  
   print("Creating plot on disk...")  
   if (bToFile == TRUE)
   {
@@ -82,7 +118,8 @@ plot3 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2
   #Create the plot  
   p <- qplot(Year, Emissions, data=dfBalt, color=Type, geom=c("point", "smooth")) +
        geom_text(aes(label=round(dfBalt$Emissions)),hjust=.5, vjust=.1)+
-       annotate("text", x = 2004, y = 1000, label = "Emissions from all sources except Point have declined.")
+       annotate("text", x = 2004, y = 1000, label = sLabel)+
+       ggtitle("Emissions by Type in Baltimore (1998-2008)")
   
   print(p)
   
@@ -90,7 +127,7 @@ plot3 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2
   if (bToFile == TRUE) dev.off()
   
   # cleanup
-  rm(dfBalt, p)
+  rm(dfBalt, p, sLabel)
   
   print("Complete.")  
   return (TRUE)

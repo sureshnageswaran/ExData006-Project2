@@ -61,9 +61,17 @@ plot2 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2
   
   dfBalt <- data.frame(Year=as.numeric(names(lBalt)), Emissions=as.numeric(lBalt))
   
-  iDiff <- round(max(dfBalt[,"Emissions"]) - min(dfBalt[,"Emissions"]))
-  sLabel <- paste("Emissions (PM 2.5) in Baltimore declined by", iDiff)
-    
+   
+  # Compute the % decrease from 1998 to 2008
+  iMin <- dfBalt$Emissions[dfBalt$Year==min(dfBalt$Year)]
+  iMax <- dfBalt$Emissions[dfBalt$Year==max(dfBalt$Year)]
+  dPercent <- round( ((iMax-iMin)/iMin) *-1*100, digits = 2)
+  iDiff <- round(iMax - iMin)
+  
+  # This is the text for the graph
+  sLabel <- paste("Emissions (PM 2.5) in Baltimore declined by", iDiff)    
+  sLabel <- paste(paste(sLabel, "\nThis is a net decrease of ", dPercent), "%.", sep="")
+
   print("Creating plot on disk...")
   if (bToFile == TRUE)
   {
@@ -74,13 +82,8 @@ plot2 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2
   #Create the plot using the base plotting tools
   par(pch=22, col="red")
   plot(dfBalt$Year, dfBalt$Emissions, type="o", xlab="Year", ylab="Emissions", col="red")
-  title("Plot#2: Emissions vs. Year in Baltimore", sub=sLabel)
- 
- 
-  #p <- qplot(Year, Emissions, data=dfBalt, ylab="Emissions", geom=c("point", "smooth")) +
-  #     annotate("text", x = 2004, y = 2000, label = sLabel)+
-  #     geom_text(aes(label=round(dfBalt$Emissions)),hjust=.5, vjust=.1)  
-  #print(p)
+  title("Plot#2: Emissions vs. Year in Baltimore", sub="")
+  text(2004, 2600, sLabel, cex=.8)  
   
   # Turn off the device i.e. flush to disk  
   if (bToFile == TRUE) dev.off()

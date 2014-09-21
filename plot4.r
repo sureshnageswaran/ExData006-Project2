@@ -63,9 +63,16 @@ plot4 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2
   # subset it to recover only the items that are coal sources
   vSources <- vSources[grep("Coal",vSources, ignore.case=TRUE)]
   
+  # Emissions sources that are coal-based are also in SCC.Level.Three in dfSCC
+  vSources1 <- as.vector(unique(dfSCC$SCC.Level.Three))
+  # Subset it to recover only the items that are coal sources
+  vSources1 <- vSources1[grep("Coal", vSources1, ignore.case=TRUE)]
+  
   print("Running subset operation on dataframe...")  
-  # Subset the merged data to retain only the records with coal sources
-  dfMerged <- subset(dfMerged, dfMerged$EI.Sector %in% vSources)
+  # Subset the merged data to retain only the records with coal sources  
+  dfMerged <- subset(dfMerged, ((dfMerged$EI.Sector %in% vSources) | (dfMerged$SCC.Level.Three %in% vSources1)))
+  
+  # dfMerged <- subset(dfMerged, dfMerged$EI.Sector %in% vSources)  
   
   # tapply the 'sum' function on the merged dataset along the index year
   dfMerged <- tapply(dfMerged$Emissions, dfMerged$year, sum)
@@ -82,12 +89,19 @@ plot4 <- function(sPath="C:/projects/rwork/exdata006/project2/ExData006-Project2
   
   # Compute the decrease
   iDiff <- round(max(dfMerged[,"Emissions"]) - min(dfMerged[,"Emissions"]))
-  sLabel <- paste("Emissions from coal-comb sources declined by", iDiff)
+  sLabel <- paste("Emissions from coal-combustion sources declined by ", iDiff,sep="")
+  
+  # Compute the % decrease as well
+  iPer <- round (iDiff / dfMerged$Emissions[dfMerged$Year == min(dfMerged$Year)] * 100, digits=2)
+  sLabel <- paste(sLabel, ".\nThis is a decrease of ", sep="")
+  sLabel <- paste(sLabel, iPer, sep="")
+  sLabel <- paste(sLabel, "%.", sep="")
   
   #Create the plot  
   p <- qplot(Year, Emissions/1000, data=dfMerged,  geom=c("point", "smooth"), ylab = "Emissions from coal (in 1000s)") + 
   geom_text(aes(label=round(dfMerged$Emissions)),hjust=0, vjust=1) +
-  annotate("text", x = 2004, y = 500, label = sLabel)
+  annotate("text", x = 2004, y = 500, label = sLabel)+
+  ggtitle("Coal-Combustion Emissions across the US (1998-2008)")
   
   print(p)
   
